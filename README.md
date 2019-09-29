@@ -7,6 +7,11 @@ This demo can be used to showcase the capabilities of [App Mesh](https://aws.ama
 
 This demo can be run on a local system (macOS or Linux) or in a Cloud9 Desktop. 
 
+
+If using an [AWS Cloud9 Desktop](https://eu-west-1.console.aws.amazon.com/cloud9/home?region=eu-west-1) then follow the steps at [EKS Workshop Getting Started](https://eksworkshop.com/prerequisites/workspace/) to prepare the workspace and stop after completing the step "Update IAM settings for your workspace". 
+
+Next complete the section [eksctl pre-requisites](https://eksworkshop.com/eksctl/prerequisites/)
+
 The `jq` utility should be available since some scripts require it and we will be creating a cluster as part of the demo to then use for launching workloads and integrating with App Mesh. 
 
 If using a local system use the package management capabilities of the OS to ensure that `jq` and `kubectl` are installed. Homebrew installation steps for macOS are shown below:
@@ -27,7 +32,7 @@ An assumption is made that IAM keys are being used that provide a level of acces
 
 AdministratorAccess will grant sufficient privileges but is obviously not intended for production use. This tutorial at present also assumes all resources are running in the eu-west-1 region. 
 
-If using an [AWS Cloud9 Desktop](https://eu-west-1.console.aws.amazon.com/cloud9/home?region=eu-west-1) then follow the steps at [EKS Workshop Getting Started](https://eksworkshop.com/prerequisites/workspace/) to prepare the workspace and stop after completing the step "Update IAM settings for your workspace".
+
 
 # Download this repository
 
