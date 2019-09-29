@@ -22,7 +22,7 @@ kubectl delete deployment -nprod jazz-v2
 
 kubectl delete service -nprod dj
 kubectl delete service -nprod metal-v1
-kubectl delete service -nprod metal-v1
+kubectl delete service -nprod metal-v2
 kubectl delete service -nprod metal
 kubectl delete service -nprod jazz-v1
 kubectl delete service -nprod jazz-v2
