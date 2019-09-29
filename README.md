@@ -114,18 +114,20 @@ Next it creates Custom Resource Definitions and an App Mesh controller that will
 
 After this it communicated with AWS App Mesh and creates the mesh (dj-app) and sets up Virtual Nodes, Virtual Services and Virtual Routers however it hasn't switched over to them yet. 
 
-Next run `./stage3.sh`
+3. Redeploy the current pods but with sidecars loaded and start using the mesh
 
-This will step through the current status of the running pods and point out that in each pod only 1 container out of 1 defined is running (the worklaod itself). We'll patch the deployment to force a redeploy and this will then inject the necessary components to allow the pods to utilise the mesh for transport as well as capture metrics into AWS X-Ray from the daemon that is also loaded as a sidecar.
+`./stage3.sh`
 
-Go back to the terminals where the `./ranCon.sh` commands were being issued and change the service names from <service>-v1 to <service> so run:
+This will step through the current status of the running pods and point out that in each pod only 1 container out of 1 defined is running (the worklaod itself). We will look inside the jazz pod to show what container is running and then we'll patch the deployment to force a redeploy and this will  inject the necessary components to allow the pods to utilise the mesh for transport as well as capture metrics into AWS X-Ray from the daemon that is also loaded as a sidecar. Finally it will show the new Jazz pod showing the other containers running within it. 
+
+Go back to the terminals where the `./ranCon.sh` commands were being issued (if the command was left running it should have been interrupted) and change the service names from <service>-v1 to <service> so run:
 
 
 `./ranCon.sh metal`
 and
 `./ranCon.sh jazz`
 
-You should now be seeing the same returns so fundamentally the responses are different however we are now using the mesh to route the requests to the backends and able to get telemetry from them. Another benefit of this setup is these services can now be reached from outside the kubernetes cluster whereas before they were only available within the cluster. We could have exposed them by way of a LoadBalancer but this would push the costs up. 
+You should now be seeing the same returns so fundamentally the responses are the same however we are now using the mesh to route the requests to the backends and able to get telemetry from them. Another benefit of this setup is these services can now be reached from outside the kubernetes cluster by other members of the mesh whereas before they were only available within the cluster. We could have exposed them by using a LoadBalancer but this would push costs up. 
 
 Leave these commands running in order to generate some responses for visibility in X-Ray and then open the [X-Ray Console](https://eu-west-1.console.aws.amazon.com/xray/home?region=eu-west-1)
 
@@ -136,6 +138,8 @@ Ideally you should be presented with something like the following:
 ![service map](img/service-map.png)
 
 Here we can see the requests being routed from the dj service to the backends including how many transactions per minute and average response time. Clicking on each point in the map will load a section showing information about the responses. You can also click on Traces on the left hand side and view individual requests. Clicking on a request in the Trace List will show the full time from request to response from the DJ service itself as well as the service it was calling to. 
+
+4. Deploy V2 services and change routing weights. 
 
 Ok so now we are routing the requests through the Mesh however we still only have two backends but the developers want to test a new backend. The Metal team are very confident in their new version and want to shift 50% of the traffic to their V2 but the Jazz team are more cautious and only want to route 10% at this point in time. 
 
@@ -150,6 +154,8 @@ X-Ray should look something like the following:
 ![service map v2](img/service-map-v2.png)
 
 Looking at the transactions per minute, this should again be representative of the 50/50 split for Metal and 90/10 split for Jazz.
+
+5. Switch to V2
 
 Lastly, execute `./stage5.sh` which will flip all traffic over to the new V2 services. 
 

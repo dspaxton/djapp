@@ -4,7 +4,7 @@ echo This indicates 1 container in each pod
 echo
 kubectl get pods -n prod
 
-echo -n "Hit enter to continue"
+echo "Hit enter to continue"
 read -e
 echo
 echo "Look inside the pod to see what container(s) are running"
@@ -12,7 +12,7 @@ echo
 
 jazzpod=$(kubectl get pods -l app=jazz -o json -nprod | jq .items[0].metadata.name | sed 's/"//g')
 kubectl describe pod -n prod ${jazzpod} | awk '/Containers/,/QoS/'
-echo -n "Hit enter to continue"
+echo "Hit enter to continue"
 read -e
 
 
@@ -39,10 +39,10 @@ kubectl patch deployment jazz-v1 -nprod -p "{\"spec\":{\"template\":{\"metadata\
 echo
 echo "Waiting for pods to come back up."
 echo
-sleep 30
+sleep 40
 
 kubectl get pods -n prod
-echo -n "Hit enter to continue"
+echo "Hit enter to continue"
 read -e
 jazzpod=$(kubectl get pods -l app=jazz -o json -nprod | jq .items[0].metadata.name | sed 's/"//g')
 kubectl describe pod -n prod ${jazzpod} | awk '/Containers/,/QoS/'
