@@ -97,7 +97,7 @@ Seven total services with App Mesh sidecars proxying traffic, and the App Mesh c
 
 ## What We'll Cover
 
-1. Creation of the tightly-coupled version of the application
+# 1. Creation of the tightly-coupled version of the application
 
 `./stage.sh`
 
@@ -109,7 +109,7 @@ and
 
 The responses from each command should be as described above, Judas Priest or Megadeth for metal-v1 and Astrud Gilberto or Miles Davis for jazz-v1. 
 
-2. Start creation of the App Mesh injector Controller and Custom Resource Definitions
+# 2. Start creation of the App Mesh injector Controller and Custom Resource Definitions
 
 `./stage2.sh`
 
@@ -119,7 +119,7 @@ Next it creates Custom Resource Definitions and an App Mesh controller that will
 
 After this it communicated with AWS App Mesh and creates the mesh (dj-app) and sets up Virtual Nodes, Virtual Services and Virtual Routers however it hasn't switched over to them yet. 
 
-3. Redeploy the current pods but with sidecars loaded and start using the mesh
+# 3. Redeploy the current pods but with sidecars loaded and start using the mesh
 
 `./stage3.sh`
 
@@ -144,7 +144,7 @@ Ideally you should be presented with something like the following:
 
 Here we can see the requests being routed from the dj service to the backends including how many transactions per minute and average response time. Clicking on each point in the map will load a section showing information about the responses. You can also click on Traces on the left hand side and view individual requests. Clicking on a request in the Trace List will show the full time from request to response from the DJ service itself as well as the service it was calling to. 
 
-4. Deploy V2 services and change routing weights. 
+# 4. Deploy V2 services and change routing weights. 
 
 Ok so now we are routing the requests through the Mesh however we still only have two backends but the developers want to test a new backend. The Metal team are very confident in their new version and want to shift 50% of the traffic to their V2 but the Jazz team are more cautious and only want to route 10% at this point in time. 
 
@@ -160,7 +160,7 @@ X-Ray should look something like the following:
 
 Looking at the transactions per minute, this should again be representative of the 50/50 split for Metal and 90/10 split for Jazz.
 
-5. Switch to V2
+# 5. Switch to V2
 
 Lastly, execute `./stage5.sh` which will flip all traffic over to the new V2 services. 
 
