@@ -4,7 +4,36 @@ This demo can be used to showcase the capabilities of [App Mesh](https://aws.ama
 
 ## Prerequisites
 
-The `jq` utility should be available since some scripts require it and we will be creating a cluster as part of the demo to then use for launching workloads and integrating with App Mesh. An assumption is made that IAM keys are being used that provide a level of access to create the resources necessary. AdministratorAccess will grant sufficient privileges but is obviously not intended for production use. This tutorial at present also assumes all resources are running in the eu-west-1 region. 
+
+This demo can be run on a local system (macOS or Linux) or in a Cloud9 Desktop. 
+
+The `jq` utility should be available since some scripts require it and we will be creating a cluster as part of the demo to then use for launching workloads and integrating with App Mesh. 
+
+If using a local system use the package management capabilities of the OS to ensure that `jq` and `kubectl` are installed. Homebrew installation steps for macOS are shown below:
+
+```bash
+# install helm cli
+brew install jq
+```
+
+Make sure that `kubectl` is also be installed. 
+
+```bash
+# install helm cli
+brew install kubectl
+```
+
+An assumption is made that IAM keys are being used that provide a level of access to create the resources necessary. If using temporary credentials, make sure these are loaded into each terminal window you intend on using. Ideally you should have 3 windows ready, 1 for launching and modifying cluster resources and 1 each for running commands inside pods in the cluster. 
+
+AdministratorAccess will grant sufficient privileges but is obviously not intended for production use. This tutorial at present also assumes all resources are running in the eu-west-1 region. 
+
+If using an [AWS Cloud9 Desktop](https://eu-west-1.console.aws.amazon.com/cloud9/home?region=eu-west-1) then follow the steps at [EKS Workshop Getting Started](https://eksworkshop.com/prerequisites/workspace/) to prepare the workspace and stop after completing the step "Update IAM settings for your workspace".
+
+# Download this repository
+
+`git clone https://github.com/dspaxton/djapp`
+
+Change into the djapp directory
 
 # Launch the cluster
 
@@ -130,4 +159,5 @@ Changing the X-Ray sampling rate to 1 minute and refreshing, you should observe 
 
 execute `./cleanup.sh` when complete to tear down everything including the App Mesh and all k8s resources created to present this demo. 
 
-Finally run eksctl delete cluster appmesh-demo 
+Finally run eksctl delete cluster appmesh-demo to tear down the Cluster and the VPC created to support it. 
+
