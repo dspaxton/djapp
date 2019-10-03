@@ -1,0 +1,49 @@
+---
+apiVersion: appmesh.k8s.aws/v1beta1
+kind: VirtualNode
+metadata:
+  name: load-generator-jazz
+  namespace: prod
+spec:
+  meshName: dj-app
+  listeners:
+    - portMapping:
+        port: 80
+        protocol: http   
+  serviceDiscovery:
+    dns:
+      hostName: load-generator-jazz.prod.svc.cluster.local
+  backends:
+    # Allow outbound communication to the jazz service
+    - virtualService:
+        virtualServiceName: jazz.prod.svc.cluster.local
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: load-generator-jazz
+  namespace: prod
+  labels:
+    app.kubernetes.io/name: load-generator-jazz
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: load-generator-jazz
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: load-generator-jazz
+    spec:
+      containers:
+        - name: loader
+          ports:
+            - containerPort: 80
+          image: maddox/debug:latest
+          command:
+            - /usr/local/bin/wrk
+            - --connections=20
+            - --threads=2
+            - --duration=24h
+            - --latency
+            - http://jazz.prod.svc.cluster.local:9080

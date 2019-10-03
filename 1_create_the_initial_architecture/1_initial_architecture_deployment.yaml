@@ -30,7 +30,7 @@ kind: Deployment
 metadata:
   name: metal-v1
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: metal
@@ -58,7 +58,7 @@ kind: Deployment
 metadata:
   name: jazz-v1
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: jazz

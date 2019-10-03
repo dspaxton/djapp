@@ -7,11 +7,12 @@ kubectl get pods -n prod
 echo "Hit enter to continue"
 read -e
 echo
-echo "Look inside the pod to see what container(s) are running"
+echo "Look inside one of the jazz pods to see what container(s) are running"
 echo
 
 jazzpod=$(kubectl get pods -l app=jazz -o json -nprod | jq .items[0].metadata.name | sed 's/"//g')
 kubectl describe pod -n prod ${jazzpod} | awk '/Containers/,/QoS/'
+echo "We can see there is only one container, the jazz container itself"
 echo "Hit enter to continue"
 read -e
 
@@ -46,3 +47,9 @@ echo "Hit enter to continue"
 read -e
 jazzpod=$(kubectl get pods -l app=jazz -o json -nprod | jq .items[0].metadata.name | sed 's/"//g')
 kubectl describe pod -n prod ${jazzpod} | awk '/Containers/,/QoS/'
+echo "Now we can see 3 containers running in each pod"
+echo "Hit enter to continue"
+read -e 
+echo "Deploying wrk pods to send bulk traffic to metal and jazz backends"
+kubectl apply -f 3_add_crds/load-generator-metal.yaml
+kubectl apply -f 3_add_crds/load-generator-jazz.yaml

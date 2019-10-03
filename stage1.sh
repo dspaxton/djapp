@@ -1,3 +1,5 @@
+echo Prepare for Container insights install
+curl https://raw.githubusercontent.com/aws-samples/amazon-cloudwatch-container-insights/master/k8s-yaml-templates/quickstart/cwagent-fluentd-quickstart.yaml | sed "s/{{cluster_name}}/appmesh-demo/;s/{{region_name}}/eu-west-1/" | kubectl apply -f -
 echo
 echo Create Prod Namespace
 echo

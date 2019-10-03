@@ -5,7 +5,7 @@ metadata:
   region: eu-west-1
 nodeGroups:
   - name: default
-    instanceType: m5.large
+    instanceType: m5.2xlarge
     desiredCapacity: 3
     iam:
       withAddonPolicies:
