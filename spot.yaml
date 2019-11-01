@@ -1,0 +1,26 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+metadata:
+  name: appmesh-demo
+  region: eu-west-1
+nodeGroups:
+  - name: default
+    minSize: 3
+    maxSize: 10
+    desiredCapacity: 3
+    privateNetworking: true 
+    instancesDistribution:
+      maxPrice: 0.20
+      instanceTypes: 
+        - m5a.2xlarge
+        - m5.2xlarge
+    iam:
+      withAddonPolicies:
+        albIngress: true
+        autoScaler: true
+        appMesh: true
+        xRay: true
+        cloudWatch: true
+        ebs: true
+        fsx: true
+        efs: true
